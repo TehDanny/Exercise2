@@ -41,7 +41,11 @@ namespace ServerSideSocket
                 string clientText = reader.ReadLine();
                 Console.WriteLine("Client says: " + clientText);
 
-                writer.WriteLine("Hello client");
+                if (clientText.ToLower() == "time?")
+                    writer.WriteLine(DateTime.Now.TimeOfDay);
+                else
+                    writer.WriteLine("Unknown command.");
+
                 writer.Flush();
 
                 Console.WriteLine("Shutting down connection...");

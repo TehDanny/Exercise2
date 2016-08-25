@@ -12,6 +12,7 @@ namespace ClientSideSocket
     {
         private string serverName;
         private int port;
+        private volatile bool stop;
 
         public ClientSideSocket(string serverName, int port)
         {
@@ -23,13 +24,15 @@ namespace ClientSideSocket
         {
             Console.WriteLine(GetConnectionInfo());
             TcpClient server = new TcpClient(serverName, port);
-            NetworkStream stream = server.GetStream();
 
+            NetworkStream stream = server.GetStream();
             StreamWriter writer = new StreamWriter(stream);
-            writer.WriteLine("Hello server");
+            StreamReader reader = new StreamReader(stream);
+
+            writer.WriteLine("Time?");
             writer.Flush();
 
-            StreamReader reader = new StreamReader(stream);
+            
             string serverText = reader.ReadLine();
             Console.WriteLine(serverText);
 
